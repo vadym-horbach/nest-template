@@ -1,0 +1,26 @@
+{{#> layout}}
+  {{> logo clientRootUrl=clientRootUrl }}
+  {{#> header }}
+    Verify your email
+  {{/header}}
+
+  {{#> text }}
+    Hi {{name}},
+  {{/text}}
+  {{#> text }}
+    Someone is trying to register an account with this email address. If this is you, click the button below to verify your email address and complete registration.
+  {{/text}}
+  {{#> text }}
+    If you didn’t ask to verify this address, you can ignore this email.
+  {{/text}}
+  {{#> text }}
+    Sincerely,
+    <br />
+    Nest
+  {{/text}}
+
+  {{#> button url=url }}
+    Complete registration
+  {{/button}}
+  {{> footer }}
+{{/layout}}

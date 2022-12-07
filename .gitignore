@@ -1,0 +1,45 @@
+# compiled output
+/dist
+/node_modules
+.npm
+/.docker/nginx/conf.d/gmbcrush.conf
+/.docker/postgres/data/*
+!/.docker/postgres/data/.keep
+/.docker/redis/data/*
+!/.docker/redis/data/.keep
+/.docker/data/logs/*
+/.docker/data/tmp/*
+/host
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

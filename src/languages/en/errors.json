@@ -1,0 +1,61 @@
+{
+  "unauthorized": {
+    "tokenNotProvided": "Token is not provided.",
+    "tokenNotValid": "Token is not valid.",
+    "refreshTokenNotValid": "'Refresh token is not valid. Please re-login.",
+    "refreshTokenExpired": "Refresh token is expired. Please re-login.",
+    "codeTokenExpired": "Code is expired."
+  },
+  "badRequest": {
+    "wrongCredentials": "Your email address was not found in our system, please select 'Create account', try again or contact our support, and we can help you personally.",
+    "wrongTracking": "Wrong tracking data provided.",
+    "codeNotValid": "Code is not valid.",
+    "notSame": "New {field} should not be the same.",
+    "notSamePassword": "$t(errors.badRequest.notSame, {{\"field\": \"password\"}})",
+    "unableResend": "Unable to resend.",
+    "unableResendNotMatch": "Unable to resend.",
+    "requiredFile": "There is no file"
+  },
+  "conflict": {
+    "alreadyExists": "{entity} with that {prop} already exists.",
+    "alreadyExistsUser": "$t(errors.conflict.alreadyExists, {{\"entity\": \"User\", \"prop\": \"email\"}})",
+    "alreadyVerified": "Email already verified.",
+    "alreadySent": "Mail already sent. Please try again in 5 minutes.",
+    "alreadySentCurrent": "Mail to current email already sent. Please try again in 5 minutes.",
+    "alreadySentNew": "Mail to new email already sent. Please try again in 5 minutes.",
+    "cannotPerformStep": "You cannot perform this action at this step."
+  },
+  "notFound": {
+    "withProp": "{entity} with this {prop} not found.",
+    "withName": "{entity} not found.",
+    "notFoundUser": "$t(errors.notFound.withProp, {{\"entity\": \"User\", \"prop\": \"email\"}})",
+    "notFoundUserId": "$t(errors.notFound.withProp, {{\"entity\": \"User\", \"prop\": \"id\"}})",
+    "notFoundAddress": "$t(errors.notFound.withName, {{\"entity\": \"Address\"}})",
+    "notFoundChat": "$t(errors.notFound.withName, {{\"entity\": \"Chat\"}})",
+    "notFoundBlog": "$t(errors.notFound.withName, {{\"entity\": \"Blog Post\"}})"
+  },
+  "forbidden": {
+    "permissions": "You don't have permission to access this resource.",
+    "banned": "Your account has been blocked."
+  },
+  "internal": {
+    "default": "Something went wrong."
+  },
+  "throttler": {
+    "default": "Too Many Requests"
+  },
+  "imATeapot": {
+    "shouldVerify": "You should verify your email first. We sent you a message on your email."
+  },
+  "file": {
+    "tooManyParts": "Too many parts",
+    "tooLarge": "File too large",
+    "tooManyFiles": "Too many files",
+    "nameTooLong": "Field name too long",
+    "valueTooLong": "Field value too long",
+    "tooManyFields": "Too many fields",
+    "unexpectedField": "Unexpected file field",
+    "invalidFileType": "Invalid Image File Type",
+    "onlyImages": "Only images are allowed"
+  }
+}

@@ -1,0 +1,25 @@
+version: "3.5"
+
+networks:
+  nest-network:
+    driver: bridge
+services:
+  ##########################
+  ### SETUP BACKEND CONTAINER
+  ##########################
+  server:
+    command: node /opt/node_app/src/main
+    container_name: nest_app_server
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: app
+    restart: unless-stopped
+    environment:
+      - NODE_PORT=${NODE_PORT:-5000}
+    env_file:
+      - .env
+    networks:
+      - nest_app-network
+    ports:
+      - ${NODE_PORT:-5000}:${NODE_PORT:-5000}
