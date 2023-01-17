@@ -6,13 +6,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { getI18nContextFromArgumentsHost } from 'nestjs-i18n'
 import { isEqual, startOfToday } from 'date-fns'
 import { ImATeapotException } from '@nestjs/common/exceptions/im-a-teapot.exception'
 import { AuthService } from '../auth.service'
 import { HEADER_AUTHORIZATION } from '../../../common/constants'
 import { I_AuthorizedFastifyRequest } from '../auth.types'
-import { AsyncStorageService } from '../../../providers/async-storage'
+import { AsyncStorageService } from '../../../core'
 import { CURRENT_USER_KEY, IS_PUBLIC_KEY } from './constants'
 
 @Injectable()
@@ -33,8 +32,7 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest<I_AuthorizedFastifyRequest>()
 
-    const i18n = getI18nContextFromArgumentsHost(context)
-    this.asyncStorageService.setI18n(i18n)
+    const i18n = this.asyncStorageService.setI18n(context).getI18n()
 
     const jwtToken = request.headers[HEADER_AUTHORIZATION]?.split(' ').pop()
     if (!jwtToken) throw new UnauthorizedException(i18n.t('errors.unauthorized.tokenNotProvided'))

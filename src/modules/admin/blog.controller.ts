@@ -11,17 +11,11 @@ import {
   SerializeOptions,
   UploadedFile,
 } from '@nestjs/common'
-import { I18n, I_I18nContext } from 'nestjs-i18n'
+import { I18n, I_18nContext } from 'nestjs-i18n'
 import { firstValueFrom } from 'rxjs'
 import { ApiGlobalHeaders } from '../../common/decorators/requests'
 import { CurrentUser, PermittedRoles } from '../auth/auth.decorators'
-import {
-  fileDirs,
-  fileFilters,
-  FileStorageService,
-  I_FileS3,
-  UseAmazonS3File,
-} from '../../providers/file-storage'
+import { fileDirs, fileFilters, FileStorageService, I_FileS3, UseAmazonS3File } from '../../core'
 import { BlogPostEntity, BlogPostRepository, UserEntity } from '../../models'
 import { CreatePostDto } from './dto/blog/create-post.dto'
 import { UploadImgDto } from './dto/blog/upload-img.dto'
@@ -60,7 +54,7 @@ export class BlogController {
     @CurrentUser() user: UserEntity,
     @Param() { id }: UUIDDto,
     @UploadedFile() file: I_FileS3,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<BlogPostEntity> {
     if (!file) {
       throw new BadRequestException(i18n.t('errors.badRequest.requiredFile'))
@@ -82,7 +76,7 @@ export class BlogController {
     @CurrentUser() user: UserEntity,
     @Param() { id }: UUIDDto,
     @Body() dto: UpdatePostDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<BlogPostEntity> {
     const entity = await this.blogPostRepository.findOne({ where: { id } })
 
@@ -97,7 +91,7 @@ export class BlogController {
   async removePost(
     @CurrentUser() user: UserEntity,
     @Param() { id }: UUIDDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<BlogPostEntity> {
     const entity = await this.blogPostRepository.findOne({ where: { id } })
 

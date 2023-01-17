@@ -1,11 +1,9 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { tap } from 'rxjs/operators'
-import { getI18nContextFromArgumentsHost } from 'nestjs-i18n'
-import { AppLoggerService } from '../../core'
+import { AppLoggerService, AsyncStorageService } from '../../core'
 import { HEADER_REQUEST_ID } from '../constants'
 import { I_AuthorizedFastifyRequest } from '../../modules/auth/auth.types'
-import { AsyncStorageService } from '../../providers/async-storage'
 import { I_FastifyReply } from '../interfaces'
 import { CURRENT_USER_KEY } from '../../modules/auth/guards/constants'
 
@@ -20,13 +18,11 @@ export class AppInterceptor implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest<I_AuthorizedFastifyRequest>()
-    const i18n = getI18nContextFromArgumentsHost(context)
-
     const { method, url } = request
+
     const requestID = request.headers[HEADER_REQUEST_ID] || request.id
     const userID = request[CURRENT_USER_KEY]?.id || 'unauthorized'
-
-    this.asyncStorage.setRequestID(requestID).setUserID(userID).setI18n(i18n)
+    this.asyncStorage.setRequestID(requestID).setUserID(userID).setI18n(context)
 
     if (url !== '/') {
       this.logger.http({

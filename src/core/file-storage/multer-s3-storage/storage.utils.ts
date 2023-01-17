@@ -1,9 +1,9 @@
 import { BadRequestException, HttpException, PayloadTooLargeException } from '@nestjs/common'
 import sharp, { ResizeOptions, Sharp } from 'sharp'
-import { I_I18nContext } from 'nestjs-i18n'
+import { I_18nContext } from 'nestjs-i18n'
 import { MulterExceptionsEnum } from './storage.enums'
 
-export const transformException = (i18n: I_I18nContext, error: Error | undefined): Error | void => {
+export const transformException = (i18n: I_18nContext, error: Error | undefined): Error | void => {
   if (!error || error instanceof HttpException) {
     return error
   }

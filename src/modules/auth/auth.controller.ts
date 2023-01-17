@@ -16,10 +16,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import { map, Observable, switchMap, throwError } from 'rxjs'
-import { I18n, I_I18nContext } from 'nestjs-i18n'
+import { I18n, I_18nContext } from 'nestjs-i18n'
 import { Throttle } from '@nestjs/throttler'
 import { UserEntity, UserRepository } from '../../models'
 import {
+  AdminDto,
   AppleOauthDto,
   AuthorizedResDto,
   AuthUrlResDto,
@@ -33,7 +34,6 @@ import {
   RegisterDto,
   ResendVerifyEmailDto,
   ResetPasswordDto,
-  AdminDto,
 } from './dto'
 import { AuthDisable } from './auth.decorators'
 import { AppleAuthService, CryptoService, GoogleAuthService } from '../../shared'
@@ -64,7 +64,7 @@ export class AuthController {
   async register(
     @Query() { emailRedirect }: EmailRedirectDto,
     @Body() dto: RegisterDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<UserEntity> {
     const existedUser = await this.userRepository.findByEmail(dto.email)
 
@@ -103,7 +103,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refreshToken(
     @Body() { refreshToken }: RefreshTokenDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<AuthorizedResDto> {
     const decoded = await this.authService.verifyRefreshJwt(refreshToken)
 
@@ -189,7 +189,7 @@ export class AuthController {
   @Get('verify-email')
   async verifyEmail(
     @Query() { code }: CodeAccessDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<StatusDto> {
     const decoded = await this.authService.verifySingleUseJwt(SingleUseJwtEnum.VERIFY_EMAIL, code)
 
@@ -221,7 +221,7 @@ export class AuthController {
   async resendVerifyEmail(
     @Query() { emailRedirect }: EmailRedirectDto,
     @Body() dto: ResendVerifyEmailDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<StatusDto> {
     let user
     let emailUrl = emailRedirect
@@ -272,7 +272,7 @@ export class AuthController {
   async forgotPassword(
     @Query() { emailRedirect }: EmailRedirectDto,
     @Body() { email }: ForgotPasswordDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<StatusDto> {
     const user = await this.userRepository.findByEmail(email)
 
@@ -295,7 +295,7 @@ export class AuthController {
   @Post('reset-password')
   async resetPassword(
     @Body() { code, password }: ResetPasswordDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<StatusDto> {
     const decoded = await this.authService.verifySingleUseJwt(
       SingleUseJwtEnum.FORGOT_PASSWORD,

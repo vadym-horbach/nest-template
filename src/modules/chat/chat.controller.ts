@@ -1,6 +1,6 @@
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { Controller, Get, NotFoundException, Param, Query } from '@nestjs/common'
-import { I18n, I_I18nContext } from 'nestjs-i18n'
+import { I18n, I_18nContext } from 'nestjs-i18n'
 import { ApiGlobalHeaders } from '../../common/decorators/requests'
 import { CurrentUser } from '../auth/auth.decorators'
 import { ChatEntity, ChatRepository, MessageRepository, UserEntity } from '../../models'
@@ -20,7 +20,7 @@ export class ChatController {
   async chatInfo(
     @CurrentUser() user: UserEntity,
     @Param('chatName') name: string,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<ChatEntity> {
     const chat = await this.chatRepository.findOne({
       where: { name, participants: { userId: user.id } },
@@ -38,7 +38,7 @@ export class ChatController {
     @CurrentUser() user: UserEntity,
     @Param('chatName') name: string,
     @Query() filters: ChatFiltersDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<ListChatsDto> {
     const chat = await this.chatRepository.findOne({
       where: { name, participants: { userId: user.id } },

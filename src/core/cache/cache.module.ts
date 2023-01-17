@@ -1,9 +1,8 @@
-import { Module, CacheModule, Global } from '@nestjs/common'
-import { AppConfigService } from '../../core'
+import { Module, CacheModule } from '@nestjs/common'
+import { AppConfigService } from '../config/config.service'
 import { AppCacheService } from './cache.service'
 import { redisStore } from './redis.store'
 
-@Global()
 @Module({
   imports: [
     CacheModule.registerAsync({

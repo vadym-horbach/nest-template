@@ -7,7 +7,7 @@ import { T_SendCodeContext, T_SendUrlContext } from './mail.types'
 import { AppLoggerService } from '../logger/logger.service'
 import { RedlockService } from '../../common/providers'
 import { AppConfigService } from '../config/config.service'
-import { AsyncStorageService } from '../../providers/async-storage'
+import { AsyncStorageService } from '../async-storage'
 
 @Injectable()
 export class MailService {

@@ -1,7 +1,7 @@
 import { ApiTags } from '@nestjs/swagger'
 import { Controller, Get, NotFoundException, Param, Query } from '@nestjs/common'
 import { Like } from 'typeorm'
-import { I18n, I_I18nContext } from 'nestjs-i18n'
+import { I18n, I_18nContext } from 'nestjs-i18n'
 import { ApiGlobalHeaders } from '../../common/decorators/requests'
 import { AuthDisable } from '../auth/auth.decorators'
 import { BlogPostEntity, BlogPostRepository } from '../../models'
@@ -30,7 +30,7 @@ export class BlogController {
   }
 
   @Get(':id')
-  async fetchBlog(@Param() { id }: UUIDDto, @I18n() i18n: I_I18nContext): Promise<BlogPostEntity> {
+  async fetchBlog(@Param() { id }: UUIDDto, @I18n() i18n: I_18nContext): Promise<BlogPostEntity> {
     const entity = await this.blogPostRepository.findOne({ where: { id } })
 
     if (!entity) {

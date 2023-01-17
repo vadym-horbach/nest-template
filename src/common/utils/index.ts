@@ -40,14 +40,8 @@ export const isUUID = (string: string) => {
   return pattern.test(string)
 }
 
-export function inverseRecord<T extends string, E extends string>(
-  record: Record<T, E>,
-): Record<E, T> {
-  const invertedRecord: Record<string, T> = {}
-  Object.entries(record).forEach((data) => {
-    const [key, value] = data
-    invertedRecord[value as E] = key as T
-  })
-
-  return invertedRecord
+export const invertRecord = <T extends Record<PropertyKey, PropertyKey>>(
+  record: T,
+): { [K in keyof T as T[K]]: K } => {
+  return Object.fromEntries(Object.entries(record).map((a) => a.reverse()))
 }

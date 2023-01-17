@@ -12,9 +12,9 @@ import { transformException } from '../multer-s3-storage/storage.utils'
 import { I_MulterExtendedOptions } from '../multer-s3-storage/storage.types'
 import { multerS3Storage } from '../multer-s3-storage/multer-s3.storage'
 import { FileStorageService } from '../file-storage.service'
-import { AppConfigService } from '../../../core'
 import { I_FastifyReply, I_FastifyRequest } from '../../../common/interfaces'
 import { AsyncStorageService } from '../../async-storage'
+import { AppConfigService } from '../../config/config.service'
 
 export function AmazonS3FileInterceptor(
   fieldName: string,

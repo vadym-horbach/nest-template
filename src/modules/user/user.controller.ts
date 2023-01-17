@@ -11,7 +11,7 @@ import {
   UploadedFile,
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
-import { I18n, I_I18nContext } from 'nestjs-i18n'
+import { I18n, I_18nContext } from 'nestjs-i18n'
 import { CryptoService } from '../../shared'
 import { CurrentUser } from '../auth/auth.decorators'
 import { UserEntity, UserRepository } from '../../models'
@@ -25,7 +25,7 @@ import {
 } from './dto'
 import { UserService } from './user.service'
 import { UploadImgDto } from '../admin/dto/blog/upload-img.dto'
-import { fileDirs, fileFilters, I_FileS3, UseAmazonS3File } from '../../providers/file-storage'
+import { fileDirs, fileFilters, I_FileS3, UseAmazonS3File } from '../../core'
 import { CURRENT_USER_KEY } from '../auth/guards/constants'
 import { ChangeSettingsDto } from './dto/change-settings.dto'
 
@@ -64,7 +64,7 @@ export class UserController {
   async uploadImage(
     @CurrentUser() ipmUser: UserEntity,
     @UploadedFile() file: I_FileS3,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<UserEntity> {
     if (!file) {
       throw new BadRequestException(i18n.t('errors.badRequest.requiredFile'))
@@ -85,7 +85,7 @@ export class UserController {
   async sendChangeEmailCodes(
     @CurrentUser() user: UserEntity,
     @Query() { type, email }: ChangeEmailCodesDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<StatusDto> {
     const existedUser = await this.userRepository.findByEmail(email)
 
@@ -149,7 +149,7 @@ export class UserController {
   async confirmChangeEmailCodes(
     @CurrentUser() user: UserEntity,
     @Query() { type, code }: ConfirmChangeEmailCodesDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<StatusDto> {
     const codes = await this.userService.getChangeEmailCodes(user.id)
 
@@ -174,7 +174,7 @@ export class UserController {
   async changeEmail(
     @CurrentUser() ipmUser: UserEntity,
     @Body() { currentCode, newCode }: ChangeEmailDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<UserEntity> {
     const codes = await this.userService.getChangeEmailCodes(ipmUser.id)
 

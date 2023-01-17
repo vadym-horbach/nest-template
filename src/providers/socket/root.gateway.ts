@@ -15,7 +15,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common'
 import _ from 'lodash'
-import { I_I18nContext } from 'nestjs-i18n'
+import { I_18nContext } from 'nestjs-i18n'
 import type { T_AuthorizedSocket, T_EmitEventMap, T_ListenEventMap } from './types'
 import { EventsEnum } from './types'
 import { AuthService } from '../../modules/auth/auth.service'
@@ -24,7 +24,7 @@ import { ChatRepository, MessageRepository, ParticipantRepository } from '../../
 import { WsExceptionFilter } from './ws-exception.filter'
 import { exceptionFactory } from '../../common/serializers/exceptions'
 import { SendMessageDto } from './dto/send-message.dto'
-import { AsyncStorageService } from '../async-storage'
+import { AsyncStorageService } from '../../core'
 import { ViewMessagesDto } from './dto/view-messages.dto'
 
 @UseFilters(WsExceptionFilter)
@@ -43,7 +43,7 @@ export class RootGateway implements OnGatewayConnection {
   @WebSocketServer()
   private readonly server!: SocketIO.Server<T_ListenEventMap, T_EmitEventMap>
 
-  private readonly i18n: I_I18nContext
+  private readonly i18n: I_18nContext
 
   constructor(
     private readonly authService: AuthService,
@@ -51,8 +51,9 @@ export class RootGateway implements OnGatewayConnection {
     private readonly participantRepository: ParticipantRepository,
     private readonly messageRepository: MessageRepository,
     private readonly socketEmitter: SocketEmitter,
-    asyncStorageService: AsyncStorageService,
+    private readonly asyncStorageService: AsyncStorageService,
   ) {
+    // TODO Check translation
     this.i18n = asyncStorageService.getI18n()
   }
 

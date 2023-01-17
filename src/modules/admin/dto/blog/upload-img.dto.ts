@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { I_FileS3 } from '../../../../providers/file-storage'
+import { I_FileS3 } from '../../../../core'
 
 export class UploadImgDto {
   @ApiProperty({ type: 'string', format: 'binary', required: false })

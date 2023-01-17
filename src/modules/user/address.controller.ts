@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import { I18n, I_I18nContext } from 'nestjs-i18n'
+import { I18n, I_18nContext } from 'nestjs-i18n'
 import { CurrentUser } from '../auth/auth.decorators'
 import { AddressEntity, AddressRepository, UserEntity } from '../../models'
 import { ApiExceptions, ApiGlobalHeaders } from '../../common/decorators/requests'
@@ -38,7 +38,7 @@ export class AddressController {
   async getAddress(
     @CurrentUser() user: UserEntity,
     @Param() { id }: IDDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<AddressEntity> {
     const entity = await this.addressRepository.findOne({ where: { userId: user.id, id } })
 
@@ -73,7 +73,7 @@ export class AddressController {
     @CurrentUser() user: UserEntity,
     @Param() { id }: IDDto,
     @Body() body: UpdateAddressDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<AddressEntity> {
     const entity = await this.addressRepository.findById(id, { where: { userId: user.id } })
 
@@ -93,7 +93,7 @@ export class AddressController {
   async removeAddress(
     @CurrentUser() user: UserEntity,
     @Param() { id }: IDDto,
-    @I18n() i18n: I_I18nContext,
+    @I18n() i18n: I_18nContext,
   ): Promise<AddressEntity> {
     const entity = await this.addressRepository.findById(id, { where: { userId: user.id } })
 

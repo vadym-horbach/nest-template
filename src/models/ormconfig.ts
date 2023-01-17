@@ -19,7 +19,7 @@ class CustomNamingStrategy extends DefaultNamingStrategy {
 
 export const getDbConfig = (config: PostgresConnectionOptions): PostgresConnectionOptions => {
   return {
-    applicationName: 'escrow',
+    applicationName: 'nest_template',
     namingStrategy: new CustomNamingStrategy(),
     synchronize: false,
     entities,

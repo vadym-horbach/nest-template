@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { AppCacheService } from '../../providers/cache/cache.service'
+import { AppCacheService, MailService } from '../../core'
 import type { UserEntity } from '../../models'
-import { MailService } from '../../core'
 import { T_EmailCodes } from './types'
 
 @Injectable()

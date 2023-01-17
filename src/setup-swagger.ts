@@ -1,12 +1,13 @@
 import { INestApplication } from '@nestjs/common'
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger'
-import { version } from '../package.json'
+import { upperFirst } from 'lodash'
+import { version, name } from '../package.json'
 
 export const setupSwagger = (app: INestApplication): void => {
   const swaggerDocument = SwaggerModule.createDocument(
     app,
     new DocumentBuilder()
-      .setTitle('Escrypto')
+      .setTitle(name)
       .setDescription('API DOC')
       .setVersion(version)
       .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
@@ -22,7 +23,7 @@ export const setupSwagger = (app: INestApplication): void => {
       displayRequestDuration: true,
       validatorUrl: 'none',
     },
-    customSiteTitle: 'Escrypto API',
+    customSiteTitle: `${upperFirst(name)} API`,
   }
   SwaggerModule.setup('docs', app, swaggerDocument, options)
 }

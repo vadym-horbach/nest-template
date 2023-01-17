@@ -21,3 +21,5 @@ export type T_Join<T extends string[], D extends string> = T extends []
     ? `${F}${D}${T_Join<Extract<R, string[]>, D>}`
     : never
   : string
+
+export type T_ToDotted<T extends Record<string, any>> = T_Join<T_PathsToStringProps<T>, '.'>

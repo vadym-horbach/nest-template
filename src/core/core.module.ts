@@ -1,26 +1,29 @@
-import { ConfigModule } from '@nestjs/config'
+import path from 'path'
 import { Global, Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
-import { MailerModule } from '@nestjs-modules/mailer'
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
-import path from 'path'
-import { I18nModule, I18nService } from 'nestjs-i18n'
+import { I18nModule } from 'nestjs-i18n'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis'
-import { validate } from './config/config.validate'
 import { AppConfigService } from './config/config.service'
-import { AppLoggerService } from './logger/logger.service'
 import { AppInterceptor } from '../common/interceptors'
 import { AppClassSerializerInterceptor } from '../common/serializers/responses'
-import { MailService } from './mail/mail.service'
 import { RedlockModule } from '../common/providers'
 import { AppLanguageResolver } from '../common/pipes/app-language-resolver.service'
 import { ThrottlerBehindProxyGuard } from '../common/guards'
+import { AppCacheModule } from './cache/cache.module'
+import { AsyncStorageModule } from './async-storage/async-storage.module'
+import { AppConfigModule } from './config/config.module'
+import { LoggerModule } from './logger/logger.module'
+import { MailModule } from './mail/mail.module'
+import { FileStorageModule } from './file-storage/file-storage.module'
 
 @Global()
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, cache: true, validate }),
+    LoggerModule,
+    AsyncStorageModule,
+    AppConfigModule,
+    AppCacheModule,
     ThrottlerModule.forRootAsync({
       inject: [AppConfigService],
       useFactory: (config: AppConfigService) => ({
@@ -56,39 +59,13 @@ import { ThrottlerBehindProxyGuard } from '../common/guards'
         'ru-*': 'ru',
       },
       loaderOptions: {
-        path: path.join(__dirname, '../languages/'),
+        path: path.join(__dirname, '..', 'languages'),
         watch: true,
       },
       resolvers: [AppLanguageResolver],
       disableMiddleware: false,
     }),
-    MailerModule.forRootAsync({
-      inject: [AppConfigService, I18nService],
-      useFactory: (config: AppConfigService, i18n: I18nService) => ({
-        transport: {
-          host: config.smtp.host,
-          secure: config.smtp.secure,
-          port: config.smtp.port,
-          auth: { user: config.smtp.user, pass: config.smtp.password },
-        },
-        defaults: {
-          from: { name: 'Escrypto', address: config.smtp.user },
-          replyTo: { name: 'No Reply', address: config.smtp.user },
-        },
-        preview: config.isLocal ? { open: false } : false,
-        template: {
-          dir: path.join(__dirname, 'mail/templates'),
-          adapter: new HandlebarsAdapter({ t: i18n.hbsHelper }),
-          options: { strict: true },
-        },
-        options: {
-          partials: {
-            dir: path.join(__dirname, 'mail/templates/partials'),
-            options: { strict: true },
-          },
-        },
-      }),
-    }),
+    MailModule,
     RedlockModule.registerAsync({
       inject: [AppConfigService],
       useFactory: (config: AppConfigService) => ({
@@ -103,22 +80,19 @@ import { ThrottlerBehindProxyGuard } from '../common/guards'
         },
       }),
     }),
+    FileStorageModule,
   ],
-  providers: [
-    ThrottlerBehindProxyGuard,
-    AppInterceptor,
-    AppClassSerializerInterceptor,
-    AppConfigService,
-    AppLoggerService,
-    MailService,
-  ],
+  providers: [ThrottlerBehindProxyGuard, AppInterceptor, AppClassSerializerInterceptor],
   exports: [
-    AppClassSerializerInterceptor,
+    LoggerModule,
+    AsyncStorageModule,
+    AppConfigModule,
+    AppCacheModule,
+    MailModule,
     JwtModule,
-    AppConfigService,
-    AppLoggerService,
     RedlockModule,
-    MailService,
+    AppClassSerializerInterceptor,
+    FileStorageModule,
   ],
 })
 export class CoreModule {}

@@ -6,8 +6,8 @@ import _ from 'lodash'
 import { format } from 'date-fns'
 import { AppConfigService } from '../config/config.service'
 import { T_GenerateMetaOptions, T_MessageType, T_Meta } from './logger.types'
-import { parseStack } from '../../common/helpers'
-import { AsyncStorageService } from '../../providers/async-storage'
+import { parseStack } from '../../common/utils'
+import { AsyncStorageService } from '../async-storage'
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class AppLoggerService implements LoggerService {
@@ -105,10 +105,10 @@ export class AppLoggerService implements LoggerService {
           ...meta,
           message: `${message.name}: ${message.message}`,
           request: {
-            method: message.config.method,
-            url: message.config.url,
-            headers: message.config.headers,
-            data: message.config.data,
+            method: message.config?.method,
+            url: message.config?.url,
+            headers: message.config?.headers,
+            data: message.config?.data,
           },
           response: {
             status: message?.response?.status,

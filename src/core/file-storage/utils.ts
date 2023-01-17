@@ -5,9 +5,6 @@ import type { I_MulterExtendedOptions } from './multer-s3-storage/storage.types'
 import { AmazonS3FileInterceptor } from './interceptors/amazon-s3-file.interceptor'
 import { T_Filters } from './file-storage.types'
 
-export * from './file-storage.service'
-export { I_FileS3 } from './multer-s3-storage/storage.types'
-
 export const fileFilters: T_Filters = {
   image: (
     req: FastifyRequest,

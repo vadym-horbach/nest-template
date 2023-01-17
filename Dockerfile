@@ -1,10 +1,11 @@
-FROM node:16.15.1-alpine AS builder
-#RUN apk add --no-cache --virtual python3 make g++ curl
+FROM node:18.13.0-alpine AS builder
 WORKDIR /opt/node_app
+COPY package*.json ./
+RUN npm install
 COPY . .
-RUN npm install && npm run build
+RUN npm run build
 
-FROM node:16.15.1-alpine AS app
+FROM node:18.13.0-alpine AS app
 ENV NODE_PORT=5000
 COPY .docker/entrypoint.sh /tmp/
 RUN ["chmod", "+x", "/tmp/entrypoint.sh"]

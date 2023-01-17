@@ -6,11 +6,10 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { getI18nContextFromArgumentsHost } from 'nestjs-i18n'
 import { UserRolesEnum } from '../../../models/user'
 import { CURRENT_USER_KEY, PERMITTED_ROLES_KEY } from './constants'
 import { I_AuthorizedFastifyRequest } from '../auth.types'
-import { AsyncStorageService } from '../../../providers/async-storage'
+import { AsyncStorageService } from '../../../core'
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -20,8 +19,8 @@ export class RoleGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const i18n = getI18nContextFromArgumentsHost(context)
-    this.asyncStorageService.setI18n(i18n)
+    const i18n = this.asyncStorageService.setI18n(context).getI18n()
+
     const permittedRoles = this.reflector.getAllAndOverride<UserRolesEnum[]>(PERMITTED_ROLES_KEY, [
       context.getHandler(),
       context.getClass(),

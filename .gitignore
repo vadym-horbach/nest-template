@@ -5,9 +5,6 @@
 /.docker/nginx/conf.d/gmbcrush.conf
 /.docker/postgres/data/*
 !/.docker/postgres/data/.keep
-/.docker/redis/data/*
-!/.docker/redis/data/.keep
-/.docker/data/logs/*
 /.docker/data/tmp/*
 /host
 .env

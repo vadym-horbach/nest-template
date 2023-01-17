@@ -7,12 +7,11 @@ import {
 } from '@nestjs/common'
 import { JwtService, JwtVerifyOptions } from '@nestjs/jwt'
 import { ImATeapotException } from '@nestjs/common/exceptions/im-a-teapot.exception'
-import { AppConfigService, AppLoggerService, MailService } from '../../core'
+import { AppConfigService, AppLoggerService, MailService, AsyncStorageService } from '../../core'
 import type { T_JwtPayload } from './auth.types'
 import { T_SingleUsePayload } from './auth.types'
 import { UserEntity, UserRepository } from '../../models'
 import { CryptoService } from '../../shared'
-import { AsyncStorageService } from '../../providers/async-storage'
 import { UserRolesEnum } from '../../models/user'
 import { LoginDto } from './dto'
 

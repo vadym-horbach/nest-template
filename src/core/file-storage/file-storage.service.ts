@@ -13,7 +13,8 @@ import {
 } from 'rxjs'
 import _ from 'lodash'
 import { T_DeleteObjectRequest, T_PutObjectRequest, T_S3UploadedFile } from './file-storage.types'
-import { AppLoggerService, AppConfigService } from '../../core'
+import { AppConfigService } from '../config/config.service'
+import { AppLoggerService } from '../logger/logger.service'
 
 @Injectable()
 export class FileStorageService {

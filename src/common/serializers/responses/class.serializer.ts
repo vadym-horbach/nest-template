@@ -1,8 +1,5 @@
 import { ClassSerializerInterceptor, PlainLiteralObject } from '@nestjs/common'
 import { ClassTransformOptions } from 'class-transformer'
-// import _ from 'lodash'
-// import { BaseEntity } from '../../../models/abstract/basic.entity'
-// import { BaseDto } from './base.dto'
 
 export class AppClassSerializerInterceptor extends ClassSerializerInterceptor {
   private static prepareResponse(

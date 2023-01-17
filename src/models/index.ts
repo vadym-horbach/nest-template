@@ -24,7 +24,6 @@ export const entities: Type<BasicEntity>[] = [
 export const repositories: Type<BasicRepository<any>>[] = [
   UserRepository,
   AddressRepository,
-
   ChatRepository,
   ParticipantRepository,
   MessageRepository,

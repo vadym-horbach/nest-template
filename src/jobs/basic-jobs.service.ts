@@ -2,7 +2,7 @@ import { from, Observable, switchMap } from 'rxjs'
 import { minutesToMilliseconds } from 'date-fns'
 import { Inject, OnModuleInit } from '@nestjs/common'
 import { AppConfigService, AppLoggerService } from '../core'
-import { getCaller } from '../common/helpers'
+import { getCaller } from '../common/utils'
 import { ExecutionError, Lock, RedlockService } from '../common/providers'
 
 export abstract class BasicJobsService implements OnModuleInit {

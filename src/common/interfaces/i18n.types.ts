@@ -1,22 +1,17 @@
-import type { TranslateOptions, I18nContext } from 'nestjs-i18n'
-import type { ArgumentsHost } from '@nestjs/common'
+import { I18nContext, TranslateOptions } from 'nestjs-i18n'
 import type errors from '../../languages/en/errors.json'
-import type { T_Join, T_PathsToStringProps } from './type.helpers'
+import type { T_ToDotted } from './type.helpers'
 
-type T_Translate = {
+export type T_18nTranslations = {
   errors: typeof errors
 }
-export type T_TranslateDotted = T_Join<T_PathsToStringProps<T_Translate>, '.'>
 
-// Overwrite key declaration from @nestjs-i18n
+export type T_18nPath = T_ToDotted<T_18nTranslations>
+
 declare module 'nestjs-i18n' {
-  export interface I_I18nContext extends I18nContext {
-    translate<T = any>(key: T_TranslateDotted, options?: TranslateOptions): T
-    t<T = any>(key: T_TranslateDotted, options?: TranslateOptions): T
+  // @ts-expect-error: Bad autocomplete
+  export interface I_18nContext extends I18nContext<T_18nTranslations> {
+    translate(key: T_18nPath, options?: TranslateOptions): string
+    t(key: T_18nPath, options?: TranslateOptions): string
   }
-
-  export function getI18nContextFromRequest(req: any): I_I18nContext
-  export function getI18nServiceFromGraphQLContext(graphqlContext: any): I_I18nContext
-  export function getI18nServiceFromRpcContext(rpcContext: any): I_I18nContext
-  export function getI18nContextFromArgumentsHost(ctx: ArgumentsHost): I_I18nContext
 }

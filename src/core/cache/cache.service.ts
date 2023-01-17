@@ -2,7 +2,7 @@ import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common'
 import IORedis from 'ioredis'
 import { Ttl } from 'cache-manager'
 import { I_SingleNodeCache } from './cache.types'
-import { AppConfigService } from '../../core'
+import { AppConfigService } from '../config/config.service'
 
 @Injectable()
 export class AppCacheService {
