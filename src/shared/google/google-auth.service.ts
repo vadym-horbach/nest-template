@@ -46,7 +46,7 @@ export class GoogleAuthService {
             return throwError(
               () =>
                 new InternalServerErrorException(
-                  "Google discover documentation doesn't response. Try again later.",
+                  "Google discover documentation doesn't respond. Try again later.",
                 ),
             )
           }),
